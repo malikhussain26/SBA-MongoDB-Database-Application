@@ -1,13 +1,23 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import "dotenv/config";
+
+const PORT = process.env.PORT || 3000
 const app = express()
 
+app.use(express.json());
+
+
+app.post('/cars', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
+})
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
 
-mongoose.connect('mongodb+srv://mhussain1:rLciETFf1RSgMUP3@cluster0.piptk.mongodb.net/MongoDB-SBA?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGO_URL)
 .then(() => {
     console.log("Connected to MongoDB!");
 })
