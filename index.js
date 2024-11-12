@@ -3,12 +3,24 @@ const mongoose = require('mongoose');
 require("dotenv/config");
 
 const PORT = process.env.PORT || 3000
-const Car = require('./models/car.model.js');
+const Car = require('./collections/car.collection.js');
 const app = express()
 
+// middlewares
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+});
+
+// ===========================================
+// Car routes
+
+// app.use('/cars', carRoute);
+
+// post a car
 app.post('/cars', async (req, res) => {
     try {
         const car = await Car.create(req.body);
@@ -19,12 +31,27 @@ app.post('/cars', async (req, res) => {
 });
 
 // update a car
-app.put
+app.put('/cars/:id', async (req, res) => {
+    try {
+        
+        const { id } = req.params;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
+        const car = await Car.findByIdAndUpdate(id, req.body);
+
+        if (!car) {
+            return res.status(404).json({message: 'Car not found'});
+        }
+
+        const updatedCar = await Car.findById(id);
+
+
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
 });
 
+
+// get cars
 app.get('/cars', async (req, res) => {
     try {
         const cars = await Car.find().then((cars) => {
@@ -35,7 +62,8 @@ app.get('/cars', async (req, res) => {
     }
 });
 
-app.get('/car/:id', async (req, res) => {
+// get a car by id
+app.get('/cars/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const car = await Car.findById(id);
@@ -43,7 +71,27 @@ app.get('/car/:id', async (req, res) => {
     } catch (error) {
         res.status(500).json({message: error.message});
     }
-})
+});
+
+// Delete a car
+app.delete('/cars/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+       const car = await Car.findByIdAndDelete(id);
+
+       if (!car) {
+        return res.status(404).json({message: 'Car not found'});
+       }
+
+       res.status(200).json(car);
+
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}); 
+
+// ===========================================
 
 mongoose.connect(process.env.ATLAS_URI)
 .then(() => {
