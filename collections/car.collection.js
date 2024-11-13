@@ -21,8 +21,11 @@ const CarSchema = new mongoose.Schema(
             type: String,
             required: [ true, 'VIN is required' ],
         }
-     }
+     },
+     
 );
+
+CarSchema.index({ make: 1, model: 1 });
 
 const Car = mongoose.model('Car', CarSchema);
 

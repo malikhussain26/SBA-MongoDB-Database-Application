@@ -252,13 +252,7 @@ mongoose.connect(process.env.ATLAS_URI)
     console.log("Failed to connect to MongoDB!");
 });
 
-
-
-
-
-
-
-
+// start the server
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
