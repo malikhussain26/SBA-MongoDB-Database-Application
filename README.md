@@ -7,7 +7,7 @@ The application is designed to manage a collection of cars, allowing users to cr
 Getting Started
 To get started with the application, follow these steps:
 
-Clone the repository: git clone https://github.com/malikhussain26/SBA-MongoDB-Database-Application
+Clone the repository: git clone https://github.com/malikhussain26/SBA-MongoDB-Database-Application.git
 Install dependencies: npm install
 Start the application: node index.js
 Project Structure
