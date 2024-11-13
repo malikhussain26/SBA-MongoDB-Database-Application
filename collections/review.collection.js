@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 
 const ReviewSchema = new mongoose.Schema(
     {
-        carId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Car',
+        name: {
+            type: String,
+            required: [ true, 'Name is required' ],
         },
 
         rating: {
